@@ -100,7 +100,7 @@ public class Arm : MonoBehaviour
             currentPosition = transform.position;
 
             line.enabled = true;
-            line.numPositions = 2;
+            line.positionCount = 2;
             line.SetPosition(0, currentPosition);
             line.SetPosition(1, currentPosition);
             points.Add(currentPosition);
@@ -146,12 +146,12 @@ public class Arm : MonoBehaviour
 		if (Vector3.Angle (currentPosition - points [points.Count - 1], points [points.Count - 1] - points [points.Count - 2]) > minAngleToAddLinePoint) 
 		{
 			points.Add (currentPosition);
-			line.numPositions++;
-			line.SetPosition (line.numPositions - 1, currentPosition);
+			line.positionCount++;
+			line.SetPosition (line.positionCount - 1, currentPosition);
 		} 
 		else 
 		{
-			line.SetPosition (line.numPositions - 1, currentPosition);
+			line.SetPosition (line.positionCount - 1, currentPosition);
 		}
 
 		glove.transform.position = currentPosition;
@@ -187,7 +187,7 @@ public class Arm : MonoBehaviour
 		while (currentDistance < allowedDistance * 0.99f && points.Count > 2) 
 		{
 			points.RemoveAt (points.Count - 1);
-			line.numPositions--;
+			line.positionCount--;
 
 			targetPosition = points [points.Count - 1];
 			newPosition = Vector3.MoveTowards (currentPosition, points [points.Count - 1], allowedDistance - currentDistance);
@@ -198,9 +198,9 @@ public class Arm : MonoBehaviour
 		glove.transform.position = currentPosition;
         glove.transform.rotation = transform.rotation;
 
-		if (line.numPositions > 2) 
+		if (line.positionCount > 2) 
 		{
-			line.SetPosition (line.numPositions - 1, currentPosition);
+			line.SetPosition (line.positionCount - 1, currentPosition);
 		} 
 		else 
 		{
